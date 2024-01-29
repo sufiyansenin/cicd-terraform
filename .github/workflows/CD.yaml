@@ -1,4 +1,4 @@
-name: Terraform Deployment CD
+name: Terraform CD
 
 #when we git push successfully, this will run
 on:
@@ -34,5 +34,5 @@ jobs:
      run: terraform init
 
 #terraform apply
-   - name: Initialize Terraform
+   - name: Terraform Apply
      run: terraform apply --auto-approve
