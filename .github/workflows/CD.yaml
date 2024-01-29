@@ -1,4 +1,4 @@
-name: Terraform Deployment
+name: Terraform Deployment CD
 
 #when we git push successfully, this will run
 on:
