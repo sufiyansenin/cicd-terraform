@@ -41,6 +41,6 @@ resource "aws_security_group" "sufiyan_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["218.212.61.10"] # Replace with your actual IP address
+    cidr_blocks = ["10.91.49.29"] # Replace with your actual IP address
   }
 }
