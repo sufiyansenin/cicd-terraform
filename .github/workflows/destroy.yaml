@@ -1,0 +1,44 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tf apply on'
+        required: true
+        default: "dev"
+        type: choice
+        options:
+        ##these options here can be used to load different blocks of yaml for different steps
+        - dev
+        - staging
+        - prod
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+    ##setup
+        - name: Checkout repository
+          uses: actions/checkout@v2
+      
+    #aws configure
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: us-east-1 # or hardcode us-east-1
+
+    #install terraform
+        - name: Set up Terraform
+          uses: hashicorp/setup-terraform@v1
+
+    #terraform init
+        - name: Initialize Terraform
+          run: terraform init
+
+    # terraform destroy
+        - name: Terraform Destroy
+          run: terraform destroy --auto-approve -var-file="environments/${{ github.event.inputs.environment }}.tfvars"
